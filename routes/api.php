@@ -12,6 +12,6 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 // Route::apiResource('/user', UserController::class);
 
-Route::resource('foods', FoodController::class);
-Route::resource('kategoris', KategoriController::class);
+Route::resource('foods', App\Http\Controllers\Api\FoodController::class);
+Route::resource('kategoris', App\Http\Controllers\Api\KategoriController::class);
 

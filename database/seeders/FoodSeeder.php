@@ -19,49 +19,49 @@ class FoodSeeder extends Seeder
                 "name" => "Bakso",
                 "harga" => 11000,
                 "kategori" => "makanan",
-                "image" => "https://pixabay.com/id/photos/bakso-bakso-sapi-daging-sapi-rebus-7622509/"
+                "image" => "https://d1vbn70lmn1nqe.cloudfront.net/prod/wp-content/uploads/2023/07/25041221/ini-resep-kuah-bakso-sap-yang-mudah-dibuat-di-rumah.jpg"
             ),
             array(
                 "name" => "Mie Ayam",
                 "harga" => 12000,
                 "kategori" => "makanan",
-                "image" => "https://pixabay.com/id/photos/bakso-bakso-sapi-daging-sapi-rebus-7622513/"
+                "image" => "https://www.blibli.com/friends-backend/wp-content/uploads/2023/04/B300046-Cover-resep-mie-ayam-scaled.jpg"
             ),
             array(
                 "name" => "Sate",
                 "harga" => 20000,
                 "kategori" => "makanan",
-                "image" => "https://pixabay.com/id/photos/sate-ayam-saus-kacang-makanan-thai-3604856/"
+                "image" => "https://d1vbn70lmn1nqe.cloudfront.net/prod/wp-content/uploads/2023/07/14053934/Mudah-Dibuat-di-Rumah-Ini-Resep-Sate-Ayam-Bumbu-Kacang-yang-Lezat-.jpg"
             ),
             array(
-                "name" => "Salad",
+                "name" => "Pecel",
                 "harga" => 14000,
                 "kategori" => "makanan",
-                "image" => "https://pixabay.com/id/photos/vegan-makanan-makan-malam-salad-4809593/"
+                "image" => "https://www.frisianflag.com/storage/app/media/uploaded-files/pecel-sayur-sederhana.jpg"
             ),
             array(
                 "name" => "Es Jeruk",
                 "harga" => 3000,
                 "kategori" => "minuman",
-                "image" => "https://pixabay.com/id/photos/limun-minum-minuman-ringan-2097312/"
+                "image" => "https://www.bakmigm.com/cfind/source/thumb/images/menu/cover_w480_h480_tw1474_th1474_x117_y125_es-jeruk.jpg"
             ),
             array(
                 "name" => "Es Teh",
                 "harga" => 3000,
                 "kategori" => "minuman",
-                "image" => "https://pixabay.com/id/photos/es-teh-lemon-teh-minum-kaca-lemon-1726270/"
+                "image" => "https://static.promediateknologi.id/crop/0x0:0x0/0x0/webp/photo/p2/162/2024/07/10/jumbo-3740461361.jpg"
             ),
             array(
                 "name" => "Es Americano",
-                "harga" => 3000,
+                "harga" => 10000,
                 "kategori" => "minuman",
-                "image" => "https://pixabay.com/id/photos/es-kopi-amerika-serikat-minum-7113043/"
+                "image" => "https://i0.wp.com/resepkoki.id/wp-content/uploads/2019/03/kopi.png?fit=883%2C589&ssl=1"
             ),
             array(
-                "name" => "Lemon Machiato",
-                "harga" => 3000,
+                "name" => "Machiato",
+                "harga" => 10000,
                 "kategori" => "minuman",
-                "image" => "https://pixabay.com/id/photos/latte-macchiato-kopi-kaca-buih-susu-4166922/"
+                "image" => "https://cdn0-production-images-kly.akamaized.net/uNqpTQGU6LmjVzXRliI6uMSMvXM=/0x55:999x618/1200x675/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/3978882/original/065624800_1648599303-shutterstock_1599783562.jpg"
             )
         );
 
