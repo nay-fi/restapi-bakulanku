@@ -6,6 +6,7 @@ use App\Http\Resources\FoodCollection;
 use App\Http\Resources\FoodResource;
 use App\Models\FoodModel;
 use Exception;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -32,6 +33,7 @@ class FoodController extends Controller
             return response()->json([
                 'data' => $menu->map(function ($menu) {
                     return [
+                        'id' => $menu->id,
                         'name' => $menu->name,
                         'harga' => $menu->harga,
                         'images' => $menu->images,
@@ -80,12 +82,12 @@ class FoodController extends Controller
             'name' => 'required',
             'harga' => 'required',
             'kategori' => 'required',
-            'images' => 'required|image|file|max:10000',
+            'images' => 'required',
 
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator->error);
+            return response()->json($validator->errors());
         }
 
         try {
