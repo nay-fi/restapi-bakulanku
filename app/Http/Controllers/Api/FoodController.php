@@ -55,12 +55,28 @@ class FoodController extends Controller
         $user = Auth::user();
 
         //memanggil data menu menggunakan FoodModel
-        $menu = FoodModel::all()->where('id', $user->id)->first();
+        //memanggil data menu menggunakan FoodModel
+        $menu = FoodModel::latest('created_at')->get();
 
-        return view('dashboard_admin', [
-            'status' => response()->json($menu, 200),
-            'menu' => $menu
-        ]);
+        if ($menu->isEmpty()) {
+            return response()->json([
+                'status' => Response::HTTP_NOT_FOUND,
+                'message' => 'Menu empty'
+            ], Response::HTTP_NOT_FOUND);
+        } else {
+            return response()->json([
+                'data' => $menu,
+                'message' => 'Daftar Menu',
+                'status' => Response::HTTP_OK
+            ], Response::HTTP_OK);
+        }
+
+        // $menu = FoodModel::all()->where('id', $user->id)->first();
+
+        // return view('dashboard_admin', [
+        //     'status' => response()->json($menu, 200),
+        //     'menu' => $menu
+        // ]);
     }
 
     /**
@@ -127,7 +143,25 @@ class FoodController extends Controller
      */
     public function show(string $id)
     {
-        //
+        // mengambil data sesuai request id
+        $menu = FoodModel::where('id', $id)->first();
+
+        //menampilkan data response sesuai id
+        if ($menu) {
+            return response()->json([
+                'status' => Response::HTTP_OK,
+                'data' => [
+                    'name' => $menu->name,
+                    'harga' => $menu->harga,
+                    'images' => $menu->images,
+                ]
+            ], Response::HTTP_OK);
+        } else {
+            return response()->json([
+                'status' => Response::HTTP_NOT_FOUND,
+                'message' => 'menu tidak ditemukan'
+            ], Response::HTTP_NOT_FOUND);
+        }
     }
 
     /**
@@ -136,6 +170,7 @@ class FoodController extends Controller
     public function edit(string $id)
     {
         //
+        return view('dashboard_admin');
     }
 
     /**
@@ -144,6 +179,50 @@ class FoodController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $menu = FoodModel::find($id);
+
+        if (!$menu) {
+            return response()->json([
+                'status' => Response::HTTP_NOT_FOUND,
+                'message' => 'Menu tidak ditemukan'
+            ], Response::HTTP_NOT_FOUND);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'harga' => 'required',
+            'kategori' => 'required',
+            'images' => 'required',
+        ]);
+
+        // jika data yang tidak valid
+        if ($validator->fails()) {
+            return response()->json($validator->errors());
+        }
+
+        try {
+            $menu->update([
+                'name' => $request->name,
+                'harga' => $request->harga,
+                'kategori' => $request->kategori,
+                'images' => $request->images,
+            ]);
+
+            return response()->json([
+                'status' => Response::HTTP_OK,
+                'message' => 'Data berhasil diubah database'
+            ], Response::HTTP_OK);
+
+        } catch (Exception $e) {
+            // memberikan reseponse apabila gagal menyimpan data
+            Log::error('Error mengubah data :' . $e->getMessage());
+
+            return response()->json([
+                'status' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                'message' => 'Gagal mengubah data ke database'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
     }
 
     /**
@@ -151,6 +230,23 @@ class FoodController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        //menhapus data
+        $menu = FoodModel::find($id);
+
+        try {
+            $menu->delete();
+            return response()->json([
+                'status' => Response::HTTP_OK,
+                'message' => 'Menu telah dihapus'
+            ], Response::HTTP_OK);
+        } catch (Exception $e) {
+            // memberikan reseponse apabila gagal menyimpan data
+            Log::error('Error menghapus data :' . $e->getMessage());
+
+            return response()->json([
+                'status' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                'message' => 'Gagal menghapus data ke database'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 }
