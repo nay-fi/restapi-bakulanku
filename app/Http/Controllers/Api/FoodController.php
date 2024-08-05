@@ -207,65 +207,65 @@ class FoodController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // // cek validasi user
-        // $user = Auth::user();
+        // cek validasi user
+        $user = Auth::user();
 
-        // if (!$user) {
-        //     return response()->json([
-        //         'status' => Response::HTTP_NOT_FOUND,
-        //         'message' => 'Menu empty'
-        //     ], Response::HTTP_NOT_FOUND);
-        // }
+        if (!$user) {
+            return response()->json([
+                'status' => Response::HTTP_NOT_FOUND,
+                'message' => 'Menu empty'
+            ], Response::HTTP_NOT_FOUND);
+        }
 
-        // //memanggil data menu menggunakan FoodModel
-        // $menu = FoodModel::find($id);
+        //memanggil data menu menggunakan FoodModel
+        $menu = FoodModel::find($id);
 
-        // // return view('dashboard_admin', [
-        // //     'status' => response()->json($menu, 200),
-        // //     'menu' => $menu
-        // // ]);
-
-        // if (!$menu) {
-        //     return response()->json([
-        //         'status' => Response::HTTP_NOT_FOUND,
-        //         'message' => 'Menu tidak ditemukan'
-        //     ], Response::HTTP_NOT_FOUND);
-        // }
-
-        // $validator = Validator::make($request->all(), [
-        //     'name' => 'required',
-        //     'harga' => 'required',
-        //     'kategori' => 'required',
-        //     'images' => 'required'
+        // return view('dashboard_admin', [
+        //     'status' => response()->json($menu, 200),
+        //     'menu' => $menu
         // ]);
 
-        // // jika data yang tidak valid
-        // if ($validator->fails()) {
-        //     return response()->json($validator->errors());
-        // }
+        if (!$menu) {
+            return response()->json([
+                'status' => Response::HTTP_NOT_FOUND,
+                'message' => 'Menu tidak ditemukan'
+            ], Response::HTTP_NOT_FOUND);
+        }
 
-        // try {
-        //     $menu->update([
-        //         'name' => $request->name,
-        //         'harga' => $request->harga,
-        //         'kategori' => $request->kategori,
-        //         'images' => $request->images,
-        //     ]);
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'harga' => 'required',
+            'kategori' => 'required',
+            'images' => 'required'
+        ]);
 
-        //     return response()->json([
-        //         'status' => Response::HTTP_OK,
-        //         'message' => 'Data berhasil diubah database'
-        //     ], Response::HTTP_OK);
+        // jika data yang tidak valid
+        if ($validator->fails()) {
+            return response()->json($validator->errors());
+        }
 
-        // } catch (Exception $e) {
-        //     // memberikan reseponse apabila gagal menyimpan data
-        //     Log::error('Error mengubah data :' . $e->getMessage());
+        try {
+            $menu->update([
+                'name' => $request->name,
+                'harga' => $request->harga,
+                'kategori' => $request->kategori,
+                'images' => $request->images,
+            ]);
 
-        //     return response()->json([
-        //         'status' => Response::HTTP_INTERNAL_SERVER_ERROR,
-        //         'message' => 'Gagal mengubah data ke database'
-        //     ], Response::HTTP_INTERNAL_SERVER_ERROR);
-        // }
+            return response()->json([
+                'status' => Response::HTTP_OK,
+                'message' => 'Data berhasil diubah database'
+            ], Response::HTTP_OK);
+
+        } catch (Exception $e) {
+            // memberikan reseponse apabila gagal menyimpan data
+            Log::error('Error mengubah data :' . $e->getMessage());
+
+            return response()->json([
+                'status' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                'message' => 'Gagal mengubah data ke database'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
 
     }
 
