@@ -43,7 +43,7 @@ class FoodSeeder extends Seeder
                 "name" => "Es Jeruk",
                 "harga" => 3000,
                 "kategori" => "minuman",
-                "image" => "https://www.bakmigm.com/cfind/source/thumb/images/menu/cover_w480_h480_tw1474_th1474_x117_y125_es-jeruk.jpg"
+                "image" => "https://cdn-images.hipwee.com/wp-content/uploads/2020/06/hipwee-43525_es-jeruk.jpg"
             ),
             array(
                 "name" => "Es Teh",

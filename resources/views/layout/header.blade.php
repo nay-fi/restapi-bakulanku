@@ -1,25 +1,26 @@
 <header class="bg-white">
-    <nav class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
-      <div class="flex lg:flex-1">
-        <a href="#" class="-m-1.5 p-1.5">
-          <span class="sr-only">Your Company</span>
-          <img class="h-8 w-auto" src="" alt="">
-        </a>
+    <nav class="mx-auto flex max-w-7xl items-center justify-between p-4 lg:px-8 bg-orange-500" aria-label="Global">
+      <div class="lg:flex lg:gap-x-4 lg:justify-end lg:align-middle">
+        @auth
+        <a href="/" class="text-lg font-semibold leading-6 text-gray-100 py-2 px-4 rounded-md hover:bg-orange-400">Home</a>
+        <a href="{{route('admin.dashboard')}}" class="text-lg font-semibold leading-6 text-gray-100 py-2 px-4 rounded-md hover:bg-orange-400">Order</a>
+        @endauth
       </div>
-      <div class="flex lg:hidden">
-        <button type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700">
-          <span class="sr-only">Open main menu</span>
-          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+
+      <div class="lg:justify-end hover:bg-orange-400 py-2 px-2 rounded-md">
+        <a href="/ceklogin" class="text-lg font-semibold leading-6 inline-flex text-gray-100">Sign In &nbsp;<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15M12 9l3 3m0 0-3 3m3-3H2.25" />
           </svg>
-        </button>
+          </a>
       </div>
-      <div class="hidden lg:flex lg:gap-x-12">
-        <a href="/" class="text-sm font-semibold leading-6 text-gray-900">Main Course</a>
-        <a href="#beverage" class="text-sm font-semibold leading-6 text-gray-900">Beverage</a>
+
+      @auth
+      <div class=" lg:justify-end hover:bg-orange-400 py-2 px-2 rounded-md">
+        <a href="{{route('ceklogout')}}" class="text-lg font-semibold leading-6 inline-flex text-gray-100">Logout &nbsp;<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15M12 9l3 3m0 0-3 3m3-3H2.25" />
+          </svg>
+          </a>
       </div>
-      <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-        <a href="/login" class="text-sm font-semibold leading-6 text-gray-900">Sign In</a>
-      </div>
+      @endauth
     </nav>
   </header>

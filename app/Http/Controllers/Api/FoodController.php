@@ -24,6 +24,11 @@ class FoodController extends Controller
         //memanggil data menu menggunakan FoodModel
         $menu = FoodModel::latest('created_at')->get();
 
+        return view('menu_display', [
+            'status' => response()->json($menu, 200),
+            'menu' => $menu
+        ]);
+
         if ($menu->isEmpty()) {
             return response()->json([
                 'status' => Response::HTTP_NOT_FOUND,
@@ -44,19 +49,22 @@ class FoodController extends Controller
             ], Response::HTTP_OK);
         }
 
-        // return view('menu_display', [
-        //     'status' => response()->json($menu, 200),
-        //     'menu' => $menu
-        // ]);
+
     }
     public function indexadmin()
     {
         // cek validasi user
         $user = Auth::user();
+        $menu = FoodModel::all();
+
+        if (!$user) {
+            return response()->json([
+                'status' => Response::HTTP_NOT_FOUND,
+                'message' => 'Menu empty'
+            ], Response::HTTP_NOT_FOUND);
+        }
 
         //memanggil data menu menggunakan FoodModel
-        //memanggil data menu menggunakan FoodModel
-        $menu = FoodModel::latest('created_at')->get();
 
         if ($menu->isEmpty()) {
             return response()->json([
@@ -64,19 +72,13 @@ class FoodController extends Controller
                 'message' => 'Menu empty'
             ], Response::HTTP_NOT_FOUND);
         } else {
-            return response()->json([
-                'data' => $menu,
+            return response()->view('orders', [
+                'datas' => $menu,
                 'message' => 'Daftar Menu',
                 'status' => Response::HTTP_OK
             ], Response::HTTP_OK);
         }
 
-        // $menu = FoodModel::all()->where('id', $user->id)->first();
-
-        // return view('dashboard_admin', [
-        //     'status' => response()->json($menu, 200),
-        //     'menu' => $menu
-        // ]);
     }
 
     /**
@@ -85,7 +87,12 @@ class FoodController extends Controller
     public function create()
     {
         //
-        return view('dashboard_admin');
+        $menu = FoodModel::latest()->get();
+
+        return view('dashboard_admin', [
+            'status' => response()->json($menu, 200),
+            'menu' => $menu
+        ]);
     }
 
     /**
@@ -144,7 +151,24 @@ class FoodController extends Controller
     public function show(string $id)
     {
         // mengambil data sesuai request id
-        $menu = FoodModel::where('id', $id)->first();
+
+        $user = Auth::user();
+
+        if (!$user) {
+            return response()->json([
+                'status' => Response::HTTP_NOT_FOUND,
+                'message' => 'Menu empty'
+            ], Response::HTTP_NOT_FOUND);
+        }
+
+        //memanggil data menu menggunakan FoodModel
+        // $menu = FoodModel::all();
+        $menu = FoodModel::latest()->where('id', $id)->first();
+
+        return view('dashboard_admin', [
+            'status' => response()->json($menu, 200),
+            'menu' => $menu
+        ]);
 
         //menampilkan data response sesuai id
         if ($menu) {
@@ -170,7 +194,12 @@ class FoodController extends Controller
     public function edit(string $id)
     {
         //
-        return view('dashboard_admin');
+        $menu = FoodModel::latest()->get();
+
+        return view('dashboard_admin', [
+            'status' => response()->json($menu, 200),
+            'menu' => $menu
+        ]);
     }
 
     /**
@@ -178,50 +207,65 @@ class FoodController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
-        $menu = FoodModel::find($id);
+        // // cek validasi user
+        // $user = Auth::user();
 
-        if (!$menu) {
-            return response()->json([
-                'status' => Response::HTTP_NOT_FOUND,
-                'message' => 'Menu tidak ditemukan'
-            ], Response::HTTP_NOT_FOUND);
-        }
+        // if (!$user) {
+        //     return response()->json([
+        //         'status' => Response::HTTP_NOT_FOUND,
+        //         'message' => 'Menu empty'
+        //     ], Response::HTTP_NOT_FOUND);
+        // }
 
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'harga' => 'required',
-            'kategori' => 'required',
-            'images' => 'required',
-        ]);
+        // //memanggil data menu menggunakan FoodModel
+        // $menu = FoodModel::find($id);
 
-        // jika data yang tidak valid
-        if ($validator->fails()) {
-            return response()->json($validator->errors());
-        }
+        // // return view('dashboard_admin', [
+        // //     'status' => response()->json($menu, 200),
+        // //     'menu' => $menu
+        // // ]);
 
-        try {
-            $menu->update([
-                'name' => $request->name,
-                'harga' => $request->harga,
-                'kategori' => $request->kategori,
-                'images' => $request->images,
-            ]);
+        // if (!$menu) {
+        //     return response()->json([
+        //         'status' => Response::HTTP_NOT_FOUND,
+        //         'message' => 'Menu tidak ditemukan'
+        //     ], Response::HTTP_NOT_FOUND);
+        // }
 
-            return response()->json([
-                'status' => Response::HTTP_OK,
-                'message' => 'Data berhasil diubah database'
-            ], Response::HTTP_OK);
+        // $validator = Validator::make($request->all(), [
+        //     'name' => 'required',
+        //     'harga' => 'required',
+        //     'kategori' => 'required',
+        //     'images' => 'required'
+        // ]);
 
-        } catch (Exception $e) {
-            // memberikan reseponse apabila gagal menyimpan data
-            Log::error('Error mengubah data :' . $e->getMessage());
+        // // jika data yang tidak valid
+        // if ($validator->fails()) {
+        //     return response()->json($validator->errors());
+        // }
 
-            return response()->json([
-                'status' => Response::HTTP_INTERNAL_SERVER_ERROR,
-                'message' => 'Gagal mengubah data ke database'
-            ], Response::HTTP_INTERNAL_SERVER_ERROR);
-        }
+        // try {
+        //     $menu->update([
+        //         'name' => $request->name,
+        //         'harga' => $request->harga,
+        //         'kategori' => $request->kategori,
+        //         'images' => $request->images,
+        //     ]);
+
+        //     return response()->json([
+        //         'status' => Response::HTTP_OK,
+        //         'message' => 'Data berhasil diubah database'
+        //     ], Response::HTTP_OK);
+
+        // } catch (Exception $e) {
+        //     // memberikan reseponse apabila gagal menyimpan data
+        //     Log::error('Error mengubah data :' . $e->getMessage());
+
+        //     return response()->json([
+        //         'status' => Response::HTTP_INTERNAL_SERVER_ERROR,
+        //         'message' => 'Gagal mengubah data ke database'
+        //     ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        // }
 
     }
 

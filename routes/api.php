@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\FoodController;
 use App\Http\Controllers\Api\KategoriController;
+use App\Http\Controllers\Api\CustomerController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -14,4 +15,5 @@ Route::get('/user', function (Request $request) {
 
 Route::resource('foods', App\Http\Controllers\Api\FoodController::class);
 Route::resource('kategoris', App\Http\Controllers\Api\KategoriController::class);
+Route::resource('orders', App\Http\Controllers\Api\CustomerController::class);
 
